@@ -41,6 +41,7 @@ import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
@@ -88,5 +89,37 @@ public abstract class MinecartBase extends Substance {
 				Item.dropNaturally(entityPosition, stack);
 			}
 		}
+	}
+
+	/**
+	 * The default block ID displayed inside this type of minecart, defaults to 0 for none/air.
+	 * @return int id
+	 */
+	public int getMinecraftBlockID() {
+		return 0;
+	}
+
+
+	/**
+	 * Sets the minecart to display the specified block.
+	 * @param material
+	 */
+	public void setDisplayedBlock(VanillaBlockMaterial material) {
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 20, material.getMinecraftId()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 21, 6));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_BYTE, 22, 1));
+		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
+	}
+
+	/**
+	 * Resets the minecart to display it's default block
+	 */
+	public void resetDisplayedBlock() {
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 20, getMinecraftBlockID()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 21, 6));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_BYTE, 22, getMinecraftBlockID() != 0 ? 1 : 0));
+		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
 	}
 }

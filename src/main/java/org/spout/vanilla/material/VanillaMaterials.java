@@ -52,9 +52,11 @@ import org.spout.vanilla.material.block.component.MonsterSpawnerBlock;
 import org.spout.vanilla.material.block.component.NoteBlockBlock;
 import org.spout.vanilla.material.block.component.PistonExtensionMoving;
 import org.spout.vanilla.material.block.component.SignBase;
+import org.spout.vanilla.material.block.component.DropperBlock;
 import org.spout.vanilla.material.block.component.SignPost;
 import org.spout.vanilla.material.block.component.SkullBlock;
 import org.spout.vanilla.material.block.component.WallSign;
+import org.spout.vanilla.material.block.component.HopperBlock;
 import org.spout.vanilla.material.block.component.chest.ChestBlock;
 import org.spout.vanilla.material.block.component.chest.EnderChestBlock;
 import org.spout.vanilla.material.block.door.IronDoorBlock;
@@ -66,6 +68,7 @@ import org.spout.vanilla.material.block.liquid.Lava;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.block.misc.BedBlock;
 import org.spout.vanilla.material.block.misc.CakeBlock;
+import org.spout.vanilla.material.block.component.chest.TrappedChestBlock;
 import org.spout.vanilla.material.block.misc.DecorativeDeadBush;
 import org.spout.vanilla.material.block.misc.DragonEgg;
 import org.spout.vanilla.material.block.misc.EndPortalFrame;
@@ -109,6 +112,7 @@ import org.spout.vanilla.material.block.plant.Flower;
 import org.spout.vanilla.material.block.plant.LilyPad;
 import org.spout.vanilla.material.block.plant.MelonStem;
 import org.spout.vanilla.material.block.plant.Mushroom;
+import org.spout.vanilla.material.block.ore.NetherQuartzOre;
 import org.spout.vanilla.material.block.plant.NetherWartBlock;
 import org.spout.vanilla.material.block.plant.PotatoCrop;
 import org.spout.vanilla.material.block.plant.PumpkinStem;
@@ -132,6 +136,7 @@ import org.spout.vanilla.material.block.solid.Anvil;
 import org.spout.vanilla.material.block.solid.Bedrock;
 import org.spout.vanilla.material.block.solid.BookShelf;
 import org.spout.vanilla.material.block.solid.Brick;
+import org.spout.vanilla.material.block.rail.ActivatorRail;
 import org.spout.vanilla.material.block.solid.CauldronBlock;
 import org.spout.vanilla.material.block.solid.ClayBlock;
 import org.spout.vanilla.material.block.solid.Cobblestone;
@@ -139,6 +144,9 @@ import org.spout.vanilla.material.block.solid.CraftingTable;
 import org.spout.vanilla.material.block.solid.Dirt;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
 import org.spout.vanilla.material.block.solid.Endstone;
+import org.spout.vanilla.material.block.redstone.DaylightSensor;
+import org.spout.vanilla.material.block.redstone.RedstoneBlock;
+import org.spout.vanilla.material.block.redstone.RedstoneComparator;
 import org.spout.vanilla.material.block.solid.Glass;
 import org.spout.vanilla.material.block.solid.Grass;
 import org.spout.vanilla.material.block.solid.Gravel;
@@ -168,6 +176,7 @@ import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.material.block.solid.special.VanillaIceCreamBlock;
 import org.spout.vanilla.material.block.stair.BirchWoodStairs;
 import org.spout.vanilla.material.block.stair.BrickStairs;
+import org.spout.vanilla.material.block.ore.QuartzBlock;
 import org.spout.vanilla.material.block.stair.CobblestoneStairs;
 import org.spout.vanilla.material.block.stair.JungleWoodStairs;
 import org.spout.vanilla.material.block.stair.NetherBrickStairs;
@@ -185,6 +194,7 @@ import org.spout.vanilla.material.item.armor.chain.ChainLeggings;
 import org.spout.vanilla.material.item.armor.diamond.DiamondBoots;
 import org.spout.vanilla.material.item.armor.diamond.DiamondChestplate;
 import org.spout.vanilla.material.item.armor.diamond.DiamondHelmet;
+import org.spout.vanilla.material.block.stair.QuartzStairs;
 import org.spout.vanilla.material.item.armor.diamond.DiamondLeggings;
 import org.spout.vanilla.material.item.armor.gold.GoldBoots;
 import org.spout.vanilla.material.item.armor.gold.GoldChestplate;
@@ -251,6 +261,8 @@ import org.spout.vanilla.material.item.vehicle.minecart.MinecartItem;
 import org.spout.vanilla.material.item.vehicle.minecart.PoweredMinecartItem;
 import org.spout.vanilla.material.item.vehicle.minecart.StorageMinecartItem;
 import org.spout.vanilla.material.map.Map;
+import org.spout.vanilla.material.item.vehicle.minecart.HopperMinecartItem;
+import org.spout.vanilla.material.item.vehicle.minecart.TNTMinecartItem;
 
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;
@@ -281,6 +293,7 @@ public final class VanillaMaterials {
 	public static final Rail RAIL = new Rail("Rail", 66);
 	public static final PoweredRail RAIL_POWERED = new PoweredRail("Powered Rail", 27);
 	public static final DetectorRail RAIL_DETECTOR = new DetectorRail("Detector Rail", 28);
+	public static final ActivatorRail RAIL_ACTIVATOR = new ActivatorRail("Activator Rail", 156);
 	// == Liquids ==
 	public static final Water WATER = new Water("Water", 8, true);
 	public static final Water STATIONARY_WATER = new Water("Stationary Water", 9, false);
@@ -295,12 +308,14 @@ public final class VanillaMaterials {
 	public static final LapisLazuliOre LAPIS_LAZULI_ORE = new LapisLazuliOre("Lapis Lazuli Ore", 21);
 	public static final RedstoneOre REDSTONE_ORE = new RedstoneOre("Redstone Ore", 73, false);
 	public static final RedstoneOre GLOWING_REDSTONE_ORE = new RedstoneOre("Glowing Redstone Ore", 74, true);
+	public static final NetherQuartzOre NETHER_QUARTZ_ORE = new NetherQuartzOre("Nether Quartz Ore", 153);
 	// == Solid blocks ==
 	public static final GoldBlock GOLD_BLOCK = new GoldBlock("Gold Block", 41);
 	public static final IronBlock IRON_BLOCK = new IronBlock("Iron Block", 42);
 	public static final DiamondBlock DIAMOND_BLOCK = new DiamondBlock("Diamond Block", 57);
 	public static final EmeraldBlock EMERALD_BLOCK = new EmeraldBlock("Emerald Block", 133);
 	public static final LapisLazuliBlock LAPIS_LAZULI_BLOCK = new LapisLazuliBlock("Lapis Lazuli Block", 22);
+	public static final QuartzBlock QUARTZ_BLOCK = QuartzBlock.QUARTZ_BLOCK;
 	// == Plants ==
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
 	public static final TallGrass FERN = TallGrass.FERN;
@@ -312,6 +327,7 @@ public final class VanillaMaterials {
 	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39, VanillaMaterialModels.BROWN_MUSHROOM);
 	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40, VanillaMaterialModels.RED_MUSHROOM);
 	// == Stairs ==
+	public static final QuartzStairs STAIRS_QUARTZ = new QuartzStairs("Quartz Stairs", 156);
 	public static final NetherBrickStairs STAIRS_NETHER_BRICK = new NetherBrickStairs("Nether Brick Stairs", 114);
 	public static final BrickStairs STAIRS_BRICK = new BrickStairs("Brick Stairs", 108);
 	public static final CobblestoneStairs STAIRS_COBBLESTONE = new CobblestoneStairs("Cobblestone Stairs", 67);
@@ -341,6 +357,7 @@ public final class VanillaMaterials {
 	public static final MonsterSpawnerBlock MONSTER_SPAWNER = new MonsterSpawnerBlock("Monster Spawner", 52);
 	public static final ChestBlock CHEST = new ChestBlock("Chest", 54);
 	public static final EnderChestBlock ENDER_CHEST_BLOCK = new EnderChestBlock("Ender Chest", 130);
+	public static final TrappedChestBlock TRAPPED_CHEST_BLOCK = new TrappedChestBlock("Trapped Chest", 146);
 	public static final RedstoneWire REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55);
 	public static final CraftingTable CRAFTING_TABLE = new CraftingTable("Crafting Table", 58);
 	public static final WheatCrop WHEAT_CROP = new WheatCrop("Wheat Crop", 59);
@@ -377,6 +394,8 @@ public final class VanillaMaterials {
 	public static final CakeBlock CAKE_BLOCK = new CakeBlock("Cake Block", 92);
 	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = new RedstoneRepeater("Redstone Repeater", 93, false);
 	public static final RedstoneRepeater REDSTONE_REPEATER_ON = new RedstoneRepeater("Redstone Repeater (On)", 94, true);
+	public static final RedstoneComparator REDSTONE_COMPARATOR_OFF = new RedstoneComparator("Redstone Comparator", 149, false);
+	public static final RedstoneComparator REDSTONE_COMPARATOR_ON = new RedstoneComparator("Redstone Comparator (On)", 150, true);
 	public static final LockedChest LOCKED_CHEST = new LockedChest("Locked Chest", 95);
 	public static final TrapDoor TRAPDOOR = new TrapDoor("Trapdoor", 96);
 	public static final SilverfishStone SILVERFISH_STONE = new SilverfishStone("Silverfish Stone", 97);
@@ -410,6 +429,11 @@ public final class VanillaMaterials {
 	public static final FlowerPotBlock FLOWER_POT_BLOCK = FlowerPotBlock.EMPTY;
 	public static final SkullBlock SKELETON_SKULL_BLOCK = SkullBlock.SKELETON_SKULL;
 	public static final Anvil ANVIL = new Anvil("Anvil", 145); // Anvil actually has 3 states, handled by data.
+	public static final DaylightSensor DAYLIGHT_SENSOR = new DaylightSensor("Daylight Sensor", 151);
+	public static final RedstoneBlock REDSTONE_BLOCK = new RedstoneBlock("Block of Redstone", 152);
+	public static final HopperBlock HOPPER = new HopperBlock("Hopper", 154);
+	public static final DropperBlock DROPPER = new DropperBlock("Dropper", 158);
+
 	/*
 	 * Items
 	 */
@@ -482,6 +506,8 @@ public final class VanillaMaterials {
 	public static final MinecartItem MINECART = new MinecartItem("Minecart", 328, Minecart.class);
 	public static final StorageMinecartItem MINECART_CHEST = new StorageMinecartItem("Minecart with Chest", 342);
 	public static final PoweredMinecartItem MINECART_FURNACE = new PoweredMinecartItem("Minecart with Furnace", 343);
+	public static final TNTMinecartItem MINECART_TNT = new TNTMinecartItem("Minecart with TNT", 407);
+	public static final HopperMinecartItem MINECART_HOPPER = new HopperMinecartItem("Minecart with Hopper", 408);
 	// == Others ==
 	public static final Coal COAL = Coal.COAL;
 	public static final Clay CLAY = new Clay("Clay", 337);
@@ -490,6 +516,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial EMERALD = new VanillaItemMaterial("Emerald", 388, null);
 	public static final VanillaItemMaterial IRON_INGOT = new VanillaItemMaterial("Iron Ingot", 265, null);
 	public static final VanillaItemMaterial GOLD_INGOT = new VanillaItemMaterial("Gold Ingot", 266, null);
+	public static final VanillaItemMaterial NETHER_QUARTZ = new VanillaItemMaterial("Quartz", 406, null);
 	public static final Stick STICK = new Stick("Stick", 280);
 	public static final VanillaItemMaterial BOWL = new VanillaItemMaterial("Bowl", 281, null);
 	public static final StringItem STRING = new StringItem("String", 287, TRIPWIRE);
@@ -523,6 +550,7 @@ public final class VanillaMaterials {
 	public static final BlockItem CAKE = new BlockItem("Cake", 354, VanillaMaterials.CAKE_BLOCK, null);
 	public static final BlockItem BED = new BlockItem("Bed", 355, VanillaMaterials.BED_BLOCK, null);
 	public static final BlockItem REDSTONE_REPEATER = new BlockItem("Redstone Repeater", 356, VanillaMaterials.REDSTONE_REPEATER_OFF, null);
+	public static final BlockItem REDSTONE_COMPARATOR = new BlockItem("Redstone Comparator", 404, VanillaMaterials.REDSTONE_COMPARATOR_OFF, null);
 	public static final Map MAP = new Map("Map", 358, 128, 128, null);
 	public static final VanillaItemMaterial EMPTY_MAP = new VanillaItemMaterial("Empty Map", 395, null);
 	public static final Shears SHEARS = new Shears("Shears", 359, (short) 238);
@@ -589,6 +617,7 @@ public final class VanillaMaterials {
 	public static final Fireworks FIREWORKS = new Fireworks("Fireworks", 401);
 	public static final BlockItem FIREWORKS_CHARGE = new BlockItem("Fireworks Charge", 402, VanillaMaterials.FIRE, null); //implementation is not certain.
 	public static final EnchantedBook ENCHANTED_BOOK = new EnchantedBook("Enchanted Book", 403);
+	public static final VanillaItemMaterial NETHER_BRICK_ITEM = new VanillaItemMaterial("Nether Brick", 405, null);
 	public static final PotionItem POTION = PotionItem.WATER_BOTTLE;
 	private static boolean initialized = false;
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
